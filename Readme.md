@@ -4,7 +4,7 @@
 [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Julia Talashova](https://htmlacademy.ru/profile/id47843).
-* Наставник: `Unknown`.
+* Наставник: `Максим Червонный`.
 
 ### Немного о себе
 
