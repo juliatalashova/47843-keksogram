@@ -11,7 +11,7 @@ function getMessage(a, b) {
     return 'Переданное SVG-изображение содержит ' + a + ' объектов и ' + b * 4 + ' аттрибутов';
   }
 
-  if (Array.isArray(a) && (!b)) {
+  if (Array.isArray(a) && !b) {
     return 'Количество красных точек во всех строчках изображения: ' + arraySum(a);
   }
 
