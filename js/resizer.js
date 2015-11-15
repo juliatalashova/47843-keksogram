@@ -80,22 +80,22 @@
      */
     redraw: function() {
       // Очистка изображения.
-      this._ctx.clearRect(0, 0, this._container.width, this._container.height);
+     this._ctx.clearRect(0, 0, this._container.width, this._container.height);
 
       // Параметры линии.
       // NB! Такие параметры сохраняются на время всего процесса отрисовки
       // canvas'a поэтому важно вовремя поменять их, если нужно начать отрисовку
       // чего-либо с другой обводкой.
 
-      // Толщина линии.
-      this._ctx.lineWidth = 6;
+     /// Толщина линии.
+      this._ctx.lineWidth = 3;
       // Цвет обводки.
       this._ctx.strokeStyle = '#ffe753';
       // Размер штрихов. Первый элемент массива задает длину штриха, второй
       // расстояние между соседними штрихами.
-      this._ctx.setLineDash([15, 10]);
+     /* this._ctx.setLineDash([15, 10]);
       // Смещение первого штриха от начала линии.
-      this._ctx.lineDashOffset = 7;
+      this._ctx.lineDashOffset = 7;*/
 
       // Сохранение состояния канваса.
       // Подробней см. строку 132.
@@ -113,11 +113,60 @@
 
       // Отрисовка прямоугольника, обозначающего область изображения после
       // кадрирования. Координаты задаются от центра.
-      this._ctx.strokeRect(
+    /* this._ctx.strokeRect(
           (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
           (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
           this._resizeConstraint.side - this._ctx.lineWidth / 2,
-          this._resizeConstraint.side - this._ctx.lineWidth / 2);
+          this._resizeConstraint.side - this._ctx.lineWidth / 2);*/
+
+      var xPosition = (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2;
+      var circleStep = 10;
+      var lineWidth = this._resizeConstraint.side - this._ctx.lineWidth / 2;
+      var iterNumber = lineWidth / circleStep;
+
+      for (var i = 0; i < iterNumber; i++) {
+        //первая горизонтальная линия
+        this._ctx.beginPath();
+        this._ctx.arc(xPosition + circleStep * i,
+          (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
+          1,
+          0,
+          Math.PI * 2);
+        this._ctx.stroke();
+
+        // вторая горизонтальная линия
+        this._ctx.beginPath();
+        this._ctx.arc(xPosition + circleStep * i,
+          (this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
+          1,
+          0,
+          Math.PI * 2);
+        this._ctx.stroke();
+      }
+
+      var yPosition = (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2;
+      var lineHeight = this._resizeConstraint.side - this._ctx.lineWidth / 2;
+      var iterNumberY = lineHeight/ circleStep;
+      for (var i= 0;  i < iterNumberY; i++) {
+        this._ctx.beginPath();
+        this._ctx.arc(
+            lineWidth + xPosition,
+            yPosition + circleStep * i,
+            1,
+            0,
+            Math.PI * 2);
+        this._ctx.stroke();
+
+        // вторая вертикальная линия
+        this._ctx.beginPath();
+        this._ctx.arc(
+          xPosition,
+          yPosition + circleStep * i,
+          1,
+          0,
+          Math.PI * 2);
+        this._ctx.stroke();
+      }
 
       // Восстановление состояния канваса, которое было до вызова ctx.save
       // и последующего изменения системы координат. Нужно для того, чтобы
