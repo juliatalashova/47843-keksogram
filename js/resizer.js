@@ -121,10 +121,10 @@
           this._resizeConstraint.side - this._ctx.lineWidth / 2);
 
       // Display text above the border
-      var imageSize = this._image.naturalWidth + ' x ' +  this._image.naturalHeight;
+      var imageSize = this._image.naturalWidth + ' x ' + this._image.naturalHeight;
       this._ctx.fillStyle = '#fff';
       this._ctx.font = '16px Arial';
-      this._ctx.fillText(imageSize, -50, (-this._resizeConstraint.side / 2)-10);
+      this._ctx.fillText(imageSize, -50, (-this._resizeConstraint.side / 2) - 10);
 
       // Восстановление состояния канваса, которое было до вызова ctx.save
       // и последующего изменения системы координат. Нужно для того, чтобы
