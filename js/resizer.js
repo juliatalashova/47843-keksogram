@@ -87,7 +87,8 @@
       // canvas'a поэтому важно вовремя поменять их, если нужно начать отрисовку
       // чего-либо с другой обводкой.
 
-      // Толщина линии.
+
+     /// Толщина линии.
       this._ctx.lineWidth = 6;
       // Цвет обводки.
       this._ctx.strokeStyle = '#ffe753';
@@ -119,6 +120,12 @@
           this._resizeConstraint.side - this._ctx.lineWidth / 2,
           this._resizeConstraint.side - this._ctx.lineWidth / 2);
 
+      // Display text above the border
+      var imageSize = this._image.naturalWidth + ' x ' + this._image.naturalHeight;
+      this._ctx.fillStyle = '#fff';
+      this._ctx.font = '16px Arial';
+      this._ctx.fillText(imageSize, -50, (-this._resizeConstraint.side / 2) - 10);
+
       // Восстановление состояния канваса, которое было до вызова ctx.save
       // и последующего изменения системы координат. Нужно для того, чтобы
       // следующий кадр рисовался с привычной системой координат, где точка
@@ -126,6 +133,53 @@
       // некорректно сработает даже очистка холста или нужно будет использовать
       // сложные рассчеты для координат прямоугольника, который нужно очистить.
       this._ctx.restore();
+
+      //горизонтальные линии
+      this._ctx.setLineDash([]);
+      this._ctx.lineDashOffset = 0;
+      this._ctx.beginPath();
+      var xLine1 = (this._container.width - this._resizeConstraint.side) / 2;
+      this._ctx.moveTo(xLine1, 0);
+      this._ctx.lineTo(this._resizeConstraint.side + xLine1, 0);
+      this._ctx.lineWidth = this._container.height - this._resizeConstraint.side;
+      this._ctx.strokeStyle = '#000';
+      this._ctx.globalAlpha = 0.8;
+      this._ctx.closePath();
+      this._ctx.stroke();
+
+      this._ctx.setLineDash([]);
+      this._ctx.lineDashOffset = 0;
+      this._ctx.beginPath();
+      this._ctx.moveTo(xLine1, this._image.naturalHeight);
+      this._ctx.lineTo(this._resizeConstraint.side + xLine1, this._image.naturalHeight);
+      this._ctx.lineWidth = this._container.height - this._resizeConstraint.side;
+      this._ctx.strokeStyle = '#000';
+      this._ctx.globalAlpha = 0.8;
+      this._ctx.closePath();
+      this._ctx.stroke();
+
+      //вертикальные линии
+      this._ctx.setLineDash([]);
+      this._ctx.lineDashOffset = 0;
+      this._ctx.beginPath();
+      this._ctx.moveTo(0, 0);
+      this._ctx.lineTo(0, this._image.naturalHeight);
+      this._ctx.lineWidth = this._container.width - this._resizeConstraint.side;
+      this._ctx.strokeStyle = '#000';
+      this._ctx.globalAlpha = 0.8;
+      this._ctx.closePath();
+      this._ctx.stroke();
+
+      this._ctx.setLineDash([]);
+      this._ctx.lineDashOffset = 0;
+      this._ctx.beginPath();
+      this._ctx.moveTo(this._image.naturalWidth, 0);
+      this._ctx.lineTo(this._image.naturalWidth, this._image.naturalHeight);
+      this._ctx.lineWidth = this._container.width - this._resizeConstraint.side;
+      this._ctx.strokeStyle = '#000';
+      this._ctx.globalAlpha = 0.8;
+      this._ctx.closePath();
+      this._ctx.stroke();
     },
 
     /**
