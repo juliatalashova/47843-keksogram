@@ -152,7 +152,7 @@
       this._ctx.moveTo(xLine1 - 6, this._image.naturalHeight);
       this._ctx.lineTo(this._resizeConstraint.side + xLine1, this._image.naturalHeight);
       this._ctx.lineWidth = (this._container.height - this._resizeConstraint.side);
-      this._ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
+      this._ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
       this._ctx.closePath();
       this._ctx.stroke();
 
@@ -163,7 +163,7 @@
       this._ctx.moveTo(0, 0);
       this._ctx.lineTo(0, this._image.naturalHeight);
       this._ctx.lineWidth = (this._container.width - this._resizeConstraint.side) - 12;
-      this._ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
+      this._ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
       this._ctx.closePath();
       this._ctx.stroke();
 
@@ -173,10 +173,10 @@
       this._ctx.moveTo(this._image.naturalWidth, 0);
       this._ctx.lineTo(this._image.naturalWidth, this._image.naturalHeight);
       this._ctx.lineWidth = (this._container.width - this._resizeConstraint.side);
-      this._ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
+      this._ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
       this._ctx.closePath();
       this._ctx.stroke();
-      
+
     },
 
     /**
