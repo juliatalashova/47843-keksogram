@@ -72,7 +72,16 @@
    * @return {boolean}
    */
   function resizeFormIsValid() {
-    return true;
+    var resizeFrameSide = parseInt(resizeForm['resize-size'].value);
+    var resizeFrameY = parseInt(resizeForm['resize-y'].value);
+    var resizeFrameX = parseInt(resizeForm['resize-x'].value);
+    if (resizeFrameX + resizeFrameSide <= currentResizer._image.naturalWidth
+      && resizeFrameY + resizeFrameSide <= currentResizer._image.naturalHeight
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -186,22 +195,29 @@
     uploadForm.classList.remove('invisible');
   };
 
+  resizeForm.onchange = function(evt) {
+    if (resizeFormIsValid()) {
+      resizeForm['resize-fwd'].disabled = false;
+    } else {
+      resizeForm['resize-fwd'].disabled = true;
+    }
+  };
+
   /**
    * Обработка отправки формы кадрирования. Если форма валидна, экспортирует
    * кропнутое изображение в форму добавления фильтра и показывает ее.
    * @param {Event} evt
    */
+
   resizeForm.onsubmit = function(evt) {
     evt.preventDefault();
-
     if (resizeFormIsValid()) {
-      filterImage.src = currentResizer.exportImage().src;
 
+      filterImage.src = currentResizer.exportImage().src;
       resizeForm.classList.add('invisible');
       filterForm.classList.remove('invisible');
     }
   };
-
   /**
    * Сброс формы фильтра. Показывает форму кадрирования.
    * @param {Event} evt
