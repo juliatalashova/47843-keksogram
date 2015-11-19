@@ -72,9 +72,9 @@
    * @return {boolean}
    */
   function resizeFormIsValid() {
-    var resizeFrameSide = parseInt(resizeForm['resize-size'].value);
-    var resizeFrameY = parseInt(resizeForm['resize-y'].value);
-    var resizeFrameX = parseInt(resizeForm['resize-x'].value);
+    var resizeFrameSide = parseInt(resizeForm['resize-size'].value, 10);
+    var resizeFrameY = parseInt(resizeForm['resize-y'].value, 10);
+    var resizeFrameX = parseInt(resizeForm['resize-x'].value, 10);
     if (resizeFrameX + resizeFrameSide <= currentResizer._image.naturalWidth
       && resizeFrameY + resizeFrameSide <= currentResizer._image.naturalHeight
     ) {
@@ -195,7 +195,7 @@
     uploadForm.classList.remove('invisible');
   };
 
-  resizeForm.onchange = function(evt) {
+  resizeForm.onchange = function() {
     if (resizeFormIsValid()) {
       resizeForm['resize-fwd'].disabled = false;
     } else {
