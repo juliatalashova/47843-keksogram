@@ -142,7 +142,7 @@
       this._ctx.moveTo(xLine1 - 6, 0);
       this._ctx.lineTo(this._resizeConstraint.side + xLine1, 0);
       this._ctx.lineWidth = (this._container.height - this._resizeConstraint.side) - 12;
-      this._ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
+      this._ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
       this._ctx.closePath();
       this._ctx.stroke();
 
