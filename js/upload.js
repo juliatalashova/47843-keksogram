@@ -242,7 +242,12 @@
 
     filterForm.classList.add('invisible');
     uploadForm.classList.remove('invisible');
-    var dateToExpire = +Date.now() + 133 * 24 * 60 * 60 * 1000;
+
+    var myBirthDay = new Date(2015, 6, 10);
+    var today = new Date();
+
+    var DaysSinceBirth = Math.floor((today.getTime() - myBirthDay.getTime()) / (1000 * 60 * 60 * 24));
+    var dateToExpire = +Date.now() + DaysSinceBirth * 24 * 60 * 60 * 1000;
     var formattedDateToExpire = new Date(dateToExpire).toUTCString();
     document.cookie = 'filterName=' + filterForm['upload-filter'].value + ';expires=' + formattedDateToExpire;
   };
@@ -273,25 +278,12 @@
     filterImage.className = 'filter-image-preview ' + filterMap[selectedFilter];
   };
 
-  function getCookie(cname) {
-    var name = cname + '=';
-    var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) === ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) === 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return '';
-  }
+  filterForm['upload-filter'].value = docCookies.getItem('FilterName');
 
   cleanupResizer();
   updateBackground();
   // to set checked attribute to the field "filter" with specified value "filterValue"
-  if (getCookie('filterName')) {
-    filterForm['upload-filter-' + getCookie('filterName')].checked = true;
+  if (docCookies.getItem('FilterName')) {
+    filterForm['upload-filter-' + docCookies.getItem('FilterName')].checked = true;
   }
 })();
