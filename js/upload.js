@@ -242,6 +242,9 @@
 
     filterForm.classList.add('invisible');
     uploadForm.classList.remove('invisible');
+    var dateToExpire = +Date.now() + 133 * 24 * 60 * 60 * 1000;
+    var formattedDateToExpire = new Date(dateToExpire).toUTCString();
+    document.cookie = 'filterName=' + filterForm['upload-filter'].value + ';expires=' + formattedDateToExpire;
   };
 
   /**
@@ -270,6 +273,25 @@
     filterImage.className = 'filter-image-preview ' + filterMap[selectedFilter];
   };
 
+  function getCookie(cname) {
+    var name = cname + '=';
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return '';
+  }
+
   cleanupResizer();
   updateBackground();
+  // to set checked attribute to the field "filter" with specified value "filterValue"
+  if (getCookie('filterName')) {
+    filterForm['upload-filter-' + getCookie('filterName')].checked = true;
+  }
 })();
