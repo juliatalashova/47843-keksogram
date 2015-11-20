@@ -249,7 +249,7 @@
     var DaysSinceBirth = Math.floor(today.getTime() - myBirthDay.getTime());
     var dateToExpire = +Date.now() + DaysSinceBirth;
     var formattedDateToExpire = new Date(dateToExpire).toUTCString();
-    document.cookie = 'filterName=' + filterForm['upload-filter'].value + ';expires=' + formattedDateToExpire;
+    docCookies.setItem('filterName', filterForm['upload-filter'].value, formattedDateToExpire);
   };
 
   /**
