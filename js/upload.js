@@ -242,6 +242,14 @@
 
     filterForm.classList.add('invisible');
     uploadForm.classList.remove('invisible');
+
+    var myBirthDay = new Date(2015, 6, 10);
+    var today = new Date();
+
+    var DaysSinceBirth = Math.floor(today.getTime() - myBirthDay.getTime());
+    var dateToExpire = +Date.now() + DaysSinceBirth;
+    var formattedDateToExpire = new Date(dateToExpire).toUTCString();
+    docCookies.setItem('filterName', filterForm['upload-filter'].value, formattedDateToExpire);
   };
 
   /**
@@ -270,6 +278,12 @@
     filterImage.className = 'filter-image-preview ' + filterMap[selectedFilter];
   };
 
+  filterForm['upload-filter'].value = docCookies.getItem('FilterName');
+
   cleanupResizer();
   updateBackground();
+  // to set checked attribute to the field "filter" with specified value "filterValue"
+  if (docCookies.getItem('FilterName')) {
+    filterForm['upload-filter-' + docCookies.getItem('FilterName')].checked = true;
+  }
 })();
