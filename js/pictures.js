@@ -5,14 +5,15 @@
 
 document.getElementsByClassName('filters')[0].classList.add('hidden');
 var template = document.querySelector('#picture-template');
+var fragment = new DocumentFragment();
 var container = document.querySelector('.pictures');
 
 window.pictures.forEach(function(picture) {
   var element = getElementFromTemplate(picture);
-  container.appendChild(element);
+  fragment.appendChild(element);
 });
+container.appendChild(fragment);
 document.getElementsByClassName('filters')[0].classList.remove('hidden');
-
 /**
  *@param {Object} data
  *@return {Element}
@@ -28,10 +29,6 @@ function getElementFromTemplate(data) {
   element.querySelector('.picture-comments').textContent = data.comments;
   element.querySelector('.picture-likes').textContent = data.likes;
 
-  var fragment = new DocumentFragment();
-  fragment.appendChild(element);
-  container.appendChild(fragment);
-
   var blockImage = new Image();
   blockImage.src = data.url;
   var imgToReplace = element.querySelector('img');
@@ -45,4 +42,3 @@ function getElementFromTemplate(data) {
   };
   return element;
 }
-
