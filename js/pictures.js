@@ -10,12 +10,13 @@ var container = document.querySelector('.pictures');
 var activeFilter = 'filter-all';
 var pictures = [];
 
+function filterClickHandler(evt) {
+  var clickedElementID = evt.target.id;
+  setActiveFilter(clickedElementID);
+}
 var filters = document.querySelectorAll('.filters-radio');
 for (var i = 0; i < filters.length; i++) {
-  filters[i].onclick = function(evt) {
-    var clickedElementID = evt.target.id;
-    setActiveFilter(clickedElementID);
-  };
+  filters[i].onclick = filterClickHandler;
 }
 
 getPictures();
@@ -33,15 +34,18 @@ function setActiveFilter(id, force) {
   if (activeFilter === id && !force) {
     return;
   }
-  var filteredPictures = pictures.slice(0); // Копирование массива
+  var filteredPictures = pictures.slice(0);
 
   switch (id) {
     case 'filter-new':
       filteredPictures = filteredPictures.sort(function(a, b) {
-        return b.date - a.date;
+        var realDateB = new Date(b.date);
+        var timestampB = realDateB.getTime();
+        var realDateA = new Date(a.date);
+        var timestampA = realDateA.getTime();
+        return timestampB - timestampA;
       });
       break;
-
     case 'filter-discussed':
       filteredPictures = filteredPictures.sort(function(a, b) {
         return b.comments - a.comments;
