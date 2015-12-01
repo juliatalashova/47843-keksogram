@@ -24,12 +24,14 @@ getPictures();
 function renderPictures(picturesToRender) {
   container.innerHTML = '';
   var fragmentNew = document.createDocumentFragment();
+
   picturesToRender.forEach(function(picture) {
     var element = getElementFromTemplate(picture);
     fragmentNew.appendChild(element);
   });
   container.appendChild(fragmentNew);
 }
+
 function setActiveFilter(id, force) {
   if (activeFilter === id && !force) {
     return;
@@ -37,6 +39,7 @@ function setActiveFilter(id, force) {
   var filteredPictures = pictures.slice(0);
 
   switch (id) {
+
     case 'filter-new':
       filteredPictures = filteredPictures.sort(function(a, b) {
         var realDateB = new Date(b.date);
@@ -46,6 +49,7 @@ function setActiveFilter(id, force) {
         return timestampB - timestampA;
       });
       break;
+
     case 'filter-discussed':
       filteredPictures = filteredPictures.sort(function(a, b) {
         return b.comments - a.comments;
@@ -74,11 +78,13 @@ function getElementFromTemplate(data) {
   var blockImage = new Image();
   blockImage.src = data.url;
   var imgToReplace = element.querySelector('img');
+
   blockImage.onload = function() {
     blockImage.width = imgToReplace.width;
     blockImage.height = imgToReplace.height;
     element.replaceChild(blockImage, imgToReplace);
   };
+
   blockImage.onerror = function() {
     element.classList.add('picture-load-failure');
   };
@@ -88,6 +94,7 @@ function getElementFromTemplate(data) {
 function getPictures() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'data/pictures.json');
+
   xhr.onload = function(evt) {
     container.classList.remove('pictures-loading');
     var rawData = evt.target.response;
@@ -95,9 +102,11 @@ function getPictures() {
     updateLoadedPictures(loadedPictures);
   };
   filtersContainer.classList.remove('hidden');
+
   xhr.ontimeout = function() {
     addClassFailure();
   };
+
   xhr.onerror = function() {
     addClassFailure();
   };
