@@ -246,8 +246,8 @@
     var myBirthDay = new Date(2015, 6, 10);
     var today = new Date();
 
-    var DaysSinceBirth = Math.floor(today.getTime() - myBirthDay.getTime());
-    var dateToExpire = +Date.now() + DaysSinceBirth;
+    var daysSinceBirth = Math.floor(today.getTime() - myBirthDay.getTime());
+    var dateToExpire = +Date.now() + daysSinceBirth;
     var formattedDateToExpire = new Date(dateToExpire).toUTCString();
     docCookies.setItem('filterName', filterForm['upload-filter'].value, formattedDateToExpire);
   };
