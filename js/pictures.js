@@ -9,23 +9,51 @@ var template = document.querySelector('#picture-template');
 var container = document.querySelector('.pictures');
 var activeFilter = 'filter-all';
 var pictures = [];
-
-function filterClickHandler(evt) {
-  var clickedElementID = evt.target.id;
-  setActiveFilter(clickedElementID);
-}
-var filters = document.querySelectorAll('.filters-radio');
-for (var i = 0; i < filters.length; i++) {
-  filters[i].onclick = filterClickHandler;
-}
+var filteredPictures = [];
+var currentPage = 0;
+var PAGE_SIZE = 12;
 
 getPictures();
 
-function renderPictures(picturesToRender) {
-  container.innerHTML = '';
+var scrollTimeout;
+
+window.addEventListener('scroll', function() {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(function() {
+    checkPagesNumber();
+  }, 100);
+});
+
+function checkPagesNumber() {
+  var footerCoordinates = document.querySelector('footer').getBoundingClientRect();
+  var viewportSize = window.innerHeight;
+  if (footerCoordinates.bottom - viewportSize <= footerCoordinates.height) {
+    if (currentPage < Math.ceil(filteredPictures.length / PAGE_SIZE)) {
+      renderPictures(filteredPictures, ++currentPage);
+    }
+  }
+}
+
+var filters = document.querySelector('.filters');
+filters.addEventListener('click', function(evt) {
+  var clickedElement = evt.target;
+  if (clickedElement.classList.contains('filters-radio')) {
+    setActiveFilter(clickedElement.id);
+  }
+});
+
+function renderPictures(picturesToRender, pageNumber, replace) {
+  if (replace) {
+    container.innerHTML = '';
+  }
+
   var fragmentNew = document.createDocumentFragment();
 
-  picturesToRender.forEach(function(picture) {
+  var numberFrom = pageNumber * PAGE_SIZE;
+  var numberTo = numberFrom + PAGE_SIZE;
+  var pagePictures = picturesToRender.slice(numberFrom, numberTo);
+
+  pagePictures.forEach(function(picture) {
     var element = getElementFromTemplate(picture);
     fragmentNew.appendChild(element);
   });
@@ -36,10 +64,9 @@ function setActiveFilter(id, force) {
   if (activeFilter === id && !force) {
     return;
   }
-  var filteredPictures = pictures.slice(0);
-
+  currentPage = 0;
+  filteredPictures = pictures.slice(0);
   switch (id) {
-
     case 'filter-new':
       filteredPictures = filteredPictures.sort(function(a, b) {
         var realDateB = new Date(b.date);
@@ -49,15 +76,14 @@ function setActiveFilter(id, force) {
         return timestampB - timestampA;
       });
       break;
-
     case 'filter-discussed':
       filteredPictures = filteredPictures.sort(function(a, b) {
         return b.comments - a.comments;
       });
       break;
   }
-  renderPictures(filteredPictures);
-
+  renderPictures(filteredPictures, 0, true);
+  checkPagesNumber();
   activeFilter = id;
 }
   /**
