@@ -39,7 +39,6 @@
           this._container.width / 2 - side / 2,
           this._container.height / 2 - side / 2,
           side);
-
       // Отрисовка изначального состояния канваса.
       this.redraw();
     }.bind(this);
@@ -270,7 +269,7 @@
      * @param {number} deltaY
      * @param {number} deltaSide
      */
-    moveConstraint: function(deltaX, deltaY, deltaSide) {
+      moveConstraint: function(deltaX, deltaY, deltaSide) {
       this.setConstraint(
           this._resizeConstraint.x + (deltaX || 0),
           this._resizeConstraint.y + (deltaY || 0),
