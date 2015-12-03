@@ -7,11 +7,13 @@ var filtersContainer = document.getElementsByClassName('filters')[0];
 filtersContainer.classList.add('hidden');
 var template = document.querySelector('#picture-template');
 var container = document.querySelector('.pictures');
+var footer = document.querySelector('footer');
 var activeFilter = 'filter-all';
 var pictures = [];
 var filteredPictures = [];
 var currentPage = 0;
 var PAGE_SIZE = 12;
+var timeoutSize = 100;
 
 getPictures();
 
@@ -19,13 +21,11 @@ var scrollTimeout;
 
 window.addEventListener('scroll', function() {
   clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(function() {
-    checkPagesNumber();
-  }, 100);
+  scrollTimeout = setTimeout(checkPagesNumber, timeoutSize);
 });
 
 function checkPagesNumber() {
-  var footerCoordinates = document.querySelector('footer').getBoundingClientRect();
+  var footerCoordinates = footer.getBoundingClientRect();
   var viewportSize = window.innerHeight;
   if (footerCoordinates.bottom - viewportSize <= footerCoordinates.height) {
     if (currentPage < Math.ceil(filteredPictures.length / PAGE_SIZE)) {
