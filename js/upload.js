@@ -72,9 +72,9 @@
    * @return {boolean}
    */
   function resizeFormIsValid(x, y, side) {
-    if (x + side <= currentResizer._image.naturalWidth
-      && y + side <= currentResizer._image.naturalHeight
-    ) {
+    var imgWidth = currentResizer._image.naturalWidth;
+    var imgHeight = currentResizer._image.naturalHeight;
+    if (x + side <= imgWidth && y + side <= imgHeight) {
       return true;
     } else {
       return false;
@@ -210,8 +210,11 @@
    */
   resizeForm.addEventListener('submit', function(evt) {
     evt.preventDefault();
-    if (resizeFormIsValid()) {
+    var resizeFrameSide = parseInt(resizeForm['resize-size'].value, 10);
+    var resizeFrameY = parseInt(resizeForm['resize-y'].value, 10);
+    var resizeFrameX = parseInt(resizeForm['resize-x'].value, 10);
 
+    if (resizeFormIsValid(resizeFrameX, resizeFrameY, resizeFrameSide)) {
       filterImage.src = currentResizer.exportImage().src;
       resizeForm.classList.add('invisible');
       filterForm.classList.remove('invisible');
