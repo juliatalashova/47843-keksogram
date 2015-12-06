@@ -1,11 +1,12 @@
 /**
  * Created by Julia on 22.11.2015.
  */
+/* global Photo: true */
+
 'use strict';
 
 var filtersContainer = document.getElementsByClassName('filters')[0];
 filtersContainer.classList.add('hidden');
-var template = document.querySelector('#picture-template');
 var container = document.querySelector('.pictures');
 var footer = document.querySelector('footer');
 var activeFilter = 'filter-all';
@@ -44,7 +45,10 @@ filters.addEventListener('click', function(evt) {
 
 function renderPictures(picturesToRender, pageNumber, replace) {
   if (replace) {
-    container.innerHTML = '';
+    var picturesAll = document.querySelectorAll('.picture');
+    [].forEach.call(picturesAll, function(el) {
+      container.removeChild(el);
+    });
   }
 
   var fragmentNew = document.createDocumentFragment();
@@ -54,8 +58,9 @@ function renderPictures(picturesToRender, pageNumber, replace) {
   var pagePictures = picturesToRender.slice(numberFrom, numberTo);
 
   pagePictures.forEach(function(picture) {
-    var element = getElementFromTemplate(picture);
-    fragmentNew.appendChild(element);
+    var photo = new Photo(picture);
+    photo.render();
+    fragmentNew.appendChild(photo.element);
   });
   container.appendChild(fragmentNew);
 }
@@ -90,33 +95,6 @@ function setActiveFilter(id, force) {
    *@param {Object} data
    *@return {Element}
    */
-function getElementFromTemplate(data) {
-  var element;
-  if ('content' in template) {
-    element = template.content.children[0].cloneNode(true);
-  } else {
-    element = template.children[0].cloneNode(true);
-  }
-
-  element.querySelector('.picture-comments').textContent = data.comments;
-  element.querySelector('.picture-likes').textContent = data.likes;
-
-  var blockImage = new Image();
-  blockImage.src = data.url;
-  var imgToReplace = element.querySelector('img');
-
-  blockImage.onload = function() {
-    blockImage.width = imgToReplace.width;
-    blockImage.height = imgToReplace.height;
-    element.replaceChild(blockImage, imgToReplace);
-  };
-
-  blockImage.onerror = function() {
-    element.classList.add('picture-load-failure');
-  };
-  return element;
-}
-
 function getPictures() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'data/pictures.json');
