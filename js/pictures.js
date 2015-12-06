@@ -73,7 +73,6 @@
     gallery.show();
   }
   function _onDocumentKeyDown(evt) {
-    console.log(evt);
     if (evt.keyCode === 27) {
       document.querySelector('.gallery-overlay').classList.add('invisible');
     }
