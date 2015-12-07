@@ -61,9 +61,9 @@
 
     pagePictures.forEach(function(picture) {
       var photo = new Photo(picture);
-      photo.render();
-      fragmentNew.appendChild(photo.element);
-      photo.element.addEventListener('click', _onPhotoClick);
+      var element = photo.render();
+      fragmentNew.appendChild(element);
+      element.addEventListener('click', _onPhotoClick);
       document.addEventListener('keydown', _onDocumentKeyDown);
     });
     container.appendChild(fragmentNew);

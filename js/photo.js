@@ -3,6 +3,7 @@
  */
 'use strict';
 (function() {
+  var template = document.querySelector('#picture-template');
   var Photo = function(data) {
     this._data = data;
   };
@@ -11,7 +12,6 @@
     _data: null,
     element: null,
     render: function() {
-      var template = document.querySelector('#picture-template');
       if ('content' in template) {
         this.element = template.content.children[0].cloneNode(true);
       } else {
@@ -25,15 +25,16 @@
       blockImage.src = this._data.url;
       var imgToReplace = this.element.querySelector('img');
 
-      blockImage.onload = function() {
+      blockImage.addEventListener('load', function() {
         blockImage.width = imgToReplace.width;
         blockImage.height = imgToReplace.height;
         this.element.replaceChild(blockImage, imgToReplace);
-      }.bind(this);
+      }.bind(this));
 
-      blockImage.onerror = function() {
+      blockImage.addEventListener('error', function() {
         this.element.classList.add('picture-load-failure');
-      }.bind(this);
+      }.bind(this));
+      return this.element;
     }
   };
   window.Photo = Photo;
