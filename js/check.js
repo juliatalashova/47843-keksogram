@@ -1,3 +1,9 @@
+/**
+ * @function getMessage
+ * @param a
+ * @param b
+ * @returns {*}
+ */
 function getMessage(a, b) {
   if (typeof a === 'boolean') {
     if (a === true) {
@@ -19,7 +25,11 @@ function getMessage(a, b) {
     return 'Общая площадь артефактов сжатия: ' + arraySquare(a, b) + ' пикселей';
   }
 }
-
+/**
+ * @function arraySum
+ * @param array
+ * @returns {number}
+ */
 function arraySum(array){
   var sum = 0;
   for(var i = 0; i < array.length; i++) {
@@ -27,7 +37,11 @@ function arraySum(array){
   }
   return sum;
 }
-
+/**
+ * @function arraySquare
+ * @enum {number} a, b
+ * @returns {number}
+ */
 function arraySquare(a, b) {
   var square = 0;
   for(var i = 0; i < a.length; i++) {

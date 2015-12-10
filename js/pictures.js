@@ -5,16 +5,23 @@
 
 'use strict';
 (function() {
+  /**
+   * @global
+   */
   var filtersContainer = document.getElementsByClassName('filters')[0];
   filtersContainer.classList.add('hidden');
   var container = document.querySelector('.pictures');
   var footer = document.querySelector('footer');
   var activeFilter = 'filter-all';
+  /**@enum {Array}*/
   var pictures = [];
   var filteredPictures = [];
+  /**@enum {number}*/
   var currentPage = 0;
+  /**@const*/
   var PAGE_SIZE = 12;
   var timeoutSize = 100;
+  /**@type {Gallery}*/
   var gallery = new Gallery();
 
   getPictures();
@@ -23,11 +30,17 @@
 
   window.addEventListener('scroll', function() {
     clearTimeout(scrollTimeout);
+    /**@type {*|number}*/
     scrollTimeout = setTimeout(checkPagesNumber, timeoutSize);
   });
-
+  /**
+   * @function
+   * @name checkPagesNumber
+   */
   function checkPagesNumber() {
+    /**@type {ClientRect}*/
     var footerCoordinates = footer.getBoundingClientRect();
+    /**@type {Number}*/
     var viewportSize = window.innerHeight;
     if (footerCoordinates.bottom - viewportSize <= footerCoordinates.height) {
       if (currentPage < Math.ceil(filteredPictures.length / PAGE_SIZE)) {
@@ -35,31 +48,39 @@
       }
     }
   }
-
   var filters = document.querySelector('.filters');
   filters.addEventListener('click', function(evt) {
+    /**@type {*|EventTarget|string|Node}*/
     var clickedElement = evt.target;
     if (clickedElement.classList.contains('filters-radio')) {
       setActiveFilter(clickedElement.id);
     }
   });
-
+  /**
+   * @function renderPictures
+   * @param {Array.<Object>} picturesToRender
+   * @param {number} pageNumber
+   * @param {boolean=} replace
+   */
   function renderPictures(picturesToRender, pageNumber, replace) {
     if (replace) {
+      /**@type {NodeList}*/
       var picturesAll = document.querySelectorAll('.picture');
       [].forEach.call(picturesAll, function(el) {
         el.removeEventListener('click', _onPhotoClick);
         container.removeChild(el);
       });
     }
-
+    /**@type {DocumentFragment}*/
     var fragmentNew = document.createDocumentFragment();
-
+    /**
+     * @type {number}
+     */
     var numberFrom = pageNumber * PAGE_SIZE;
     var numberTo = numberFrom + PAGE_SIZE;
     var pagePictures = picturesToRender.slice(numberFrom, numberTo);
-
     pagePictures.forEach(function(picture) {
+      /**@type {Photo}*/
       var photo = new Photo(picture);
       var element = photo.render();
       fragmentNew.appendChild(element);
@@ -68,15 +89,33 @@
     });
     container.appendChild(fragmentNew);
   }
+
+  /**
+   * @function _onPhotoClick
+   * @param {Event} evt
+   * @private
+   */
   function _onPhotoClick(evt) {
     evt.preventDefault();
     gallery.show();
   }
+
+  /**
+   * @function _onDocumentKeyDown
+   * @param {Event} evt
+   * @private
+   */
   function _onDocumentKeyDown(evt) {
     if (evt.keyCode === 27) {
       document.querySelector('.gallery-overlay').classList.add('invisible');
     }
   }
+
+  /**
+   * @function setActiveFilter
+   * @param {string} id
+   * @param {boolean=} force
+   */
   function setActiveFilter(id, force) {
     if (activeFilter === id && !force) {
       return;
@@ -85,7 +124,9 @@
     filteredPictures = pictures.slice(0);
     switch (id) {
       case 'filter-new':
+        /**@type {Array}*/
         filteredPictures = filteredPictures.sort(function(a, b) {
+          /**@type {Date}*/
           var realDateB = new Date(b.date);
           var timestampB = realDateB.getTime();
           var realDateA = new Date(a.date);
@@ -103,14 +144,15 @@
     checkPagesNumber();
     activeFilter = id;
   }
+
   /**
-   *@param {Object} data
-   *@return {Element}
+   * @function getPictures
+   * @type {Array}
    */
   function getPictures() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'data/pictures.json');
-
+    /**@param {Event} evt*/
     xhr.onload = function(evt) {
       container.classList.remove('pictures-loading');
       var rawData = evt.target.response;
@@ -130,10 +172,17 @@
     xhr.send();
   }
 
+  /**
+   * @function addClassFailure
+   */
   function addClassFailure() {
     container.classList.add('pictures-failure');
   }
 
+  /**
+   * @function updateLoadedPictures
+   * @param loadedPictures
+   */
   function updateLoadedPictures(loadedPictures) {
     pictures = loadedPictures;
     setActiveFilter(activeFilter, true);
