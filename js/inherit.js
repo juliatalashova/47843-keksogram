@@ -14,5 +14,5 @@
     EmptyConstructor.prototype = parent.prototype;
     child.prototype = new EmptyConstructor();
   }
-
+  inherit({}, {});
 })();
