@@ -13,10 +13,10 @@
   var container = document.querySelector('.pictures');
   var footer = document.querySelector('footer');
   var activeFilter = 'filter-all';
-  /**@enum {Array}*/
+  /**@type {Array}*/
   var pictures = [];
   var filteredPictures = [];
-  /**@enum {number}*/
+  /**@type {number}*/
   var currentPage = 0;
   /**@const*/
   var PAGE_SIZE = 12;
@@ -25,22 +25,21 @@
   var gallery = new Gallery();
 
   getPictures();
-
+  /**@type {undefined}*/
   var scrollTimeout;
 
   window.addEventListener('scroll', function() {
     clearTimeout(scrollTimeout);
-    /**@type {*|number}*/
+    /**@type {number}*/
     scrollTimeout = setTimeout(checkPagesNumber, timeoutSize);
   });
   /**
-   * @function
-   * @name checkPagesNumber
+   * @function checkPagesNumber
    */
   function checkPagesNumber() {
-    /**@type {ClientRect}*/
+    /**@type {Object}*/
     var footerCoordinates = footer.getBoundingClientRect();
-    /**@type {Number}*/
+    /**@type {number}*/
     var viewportSize = window.innerHeight;
     if (footerCoordinates.bottom - viewportSize <= footerCoordinates.height) {
       if (currentPage < Math.ceil(filteredPictures.length / PAGE_SIZE)) {
@@ -50,7 +49,6 @@
   }
   var filters = document.querySelector('.filters');
   filters.addEventListener('click', function(evt) {
-    /**@type {*|EventTarget|string|Node}*/
     var clickedElement = evt.target;
     if (clickedElement.classList.contains('filters-radio')) {
       setActiveFilter(clickedElement.id);
@@ -181,9 +179,9 @@
 
   /**
    * @function updateLoadedPictures
-   * @param loadedPictures
    */
   function updateLoadedPictures(loadedPictures) {
+    /**@param {Array}*/
     pictures = loadedPictures;
     setActiveFilter(activeFilter, true);
   }
