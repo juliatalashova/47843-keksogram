@@ -67,7 +67,7 @@
       /**@type {NodeList}*/
       var picturesAll = document.querySelectorAll('.picture');
       [].forEach.call(picturesAll, function(el) {
-        el.removeEventListener('click', _onPhotoClick);
+        // el.removeEventListener('click', _onPhotoClick);
         container.removeChild(el);
       });
     }
@@ -79,27 +79,20 @@
     var numberFrom = pageNumber * PAGE_SIZE;
     var numberTo = numberFrom + PAGE_SIZE;
     var pagePictures = picturesToRender.slice(numberFrom, numberTo);
-    pagePictures.forEach(function(picture) {
+    pagePictures.forEach(function(picture, index) {
       /**@type {Photo}*/
       var photo = new Photo(picture);
       var element = photo.render();
       fragmentNew.appendChild(element);
-      element.addEventListener('click', _onPhotoClick);
+
+      photo.onClick = function() {
+        gallery.setCurrentPicture(index);
+        gallery.show();
+      };
       document.addEventListener('keydown', _onDocumentKeyDown);
     });
     container.appendChild(fragmentNew);
   }
-
-  /**
-   * @function _onPhotoClick
-   * @param {Event} evt
-   * @private
-   */
-  function _onPhotoClick(evt) {
-    evt.preventDefault();
-    gallery.show();
-  }
-
   /**
    * @function _onDocumentKeyDown
    * @param {Event} evt
@@ -140,6 +133,7 @@
         });
         break;
     }
+    gallery.setPictures(filteredPictures);
     renderPictures(filteredPictures, 0, true);
     checkPagesNumber();
     activeFilter = id;
@@ -181,7 +175,7 @@
 
   /**
    * @function updateLoadedPictures
-   * @param loadedPictures
+   * @param {Array.<Object>}loadedPictures
    */
   function updateLoadedPictures(loadedPictures) {
     pictures = loadedPictures;

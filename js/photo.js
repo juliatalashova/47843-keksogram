@@ -50,9 +50,27 @@
       blockImage.addEventListener('error', function() {
         this.element.classList.add('picture-load-failure');
       }.bind(this));
+
+      this.element.addEventListener('click', this._onPhotoClick);
+
       return this.element;
     }
   };
+  /**
+   * @param {Event} evt
+   * @private
+   */
+  Photo.prototype._onPhotoClick = function() {
+    if (!this.element.classList.contains('picture-load-failure')) {
+      if (typeof this.onClick === 'function') {
+        this.onClick();
+      }
+    }
+  };
+
+  /** @type {?Function} */
+  Photo.prototype.onClick = null;
+
   window.Photo = Photo;
 })();
 

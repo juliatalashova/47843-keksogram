@@ -20,6 +20,21 @@
   };
   /**
    * @method
+   * @param {Array.<Object>} pictures
+   */
+  Gallery.prototype.setPictures = function(pictures) {
+    this.pictures = pictures;
+  };
+  /**@method*/
+  Gallery.prototype.setCurrentPicture = function(key) {
+    var picture = this.pictures[key];
+    this.element.querySelector('.gallery-overlay-image').src = picture.url;
+    var galleryControls = document.querySelector('.gallery-overlay-controls');
+    galleryControls.querySelector('.likes-count').textContent = picture.likes;
+    galleryControls.querySelector('.comments-count').textContent = picture.comments;
+  };
+  /**
+   * @method
    */
   Gallery.prototype.hide = function() {
     this.element.classList.add('invisible');
