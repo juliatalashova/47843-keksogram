@@ -145,7 +145,6 @@
 
   /**
    * @function getPictures
-   * @type {Array}
    */
   function getPictures() {
     var xhr = new XMLHttpRequest();
@@ -181,7 +180,7 @@
    * @function updateLoadedPictures
    */
   function updateLoadedPictures(loadedPictures) {
-    /**@param {Array}*/
+    /**@type {Array}*/
     pictures = loadedPictures;
     setActiveFilter(activeFilter, true);
   }

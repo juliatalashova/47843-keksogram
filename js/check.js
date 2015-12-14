@@ -1,7 +1,7 @@
 /**
  * @function getMessage
  * @param {boolean|number|Array} a
- * @param {Array|undefined} b
+ * @param {Array} [b]
  * @returns {string}
  */
 function getMessage(a, b) {
@@ -28,6 +28,7 @@ function getMessage(a, b) {
 /**
  * @function arraySum
  * @param array
+ * @type number
  * @returns {number}
  */
 function arraySum(array){
@@ -39,7 +40,8 @@ function arraySum(array){
 }
 /**
  * @function arraySquare
- * @param {number} a, b
+ * @param {number} a
+ * @param (number) b
  * @returns {number}
  */
 function arraySquare(a, b) {

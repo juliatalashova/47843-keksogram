@@ -292,7 +292,6 @@
 
   /**
    * @function getInitialConstraints
-   * @enum {number}
    */
   function getInitialConstraints() {
     var resizerConstraints = currentResizer.getConstraint();
