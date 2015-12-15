@@ -2,6 +2,7 @@
  * @function getMessage
  * @param {boolean|number|Array} a
  * @param {Array} [b]
+ * @param {boolean=} replace
  * @returns {string}
  */
 function getMessage(a, b) {
@@ -27,8 +28,7 @@ function getMessage(a, b) {
 }
 /**
  * @function arraySum
- * @param array
- * @type number
+ * @param {Array.<number>} array
  * @returns {number}
  */
 function arraySum(array){
