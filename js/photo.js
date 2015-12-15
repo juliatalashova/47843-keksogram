@@ -24,7 +24,7 @@
     element: null,
     /**
      * @method
-     * @returns {null}
+     * @returns {this.element}
      */
     render: function() {
       if ('content' in template) {

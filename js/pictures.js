@@ -13,10 +13,10 @@
   var container = document.querySelector('.pictures');
   var footer = document.querySelector('footer');
   var activeFilter = 'filter-all';
-  /**@enum {Array}*/
+  /**@type {Array}*/
   var pictures = [];
   var filteredPictures = [];
-  /**@enum {number}*/
+  /**@type {number}*/
   var currentPage = 0;
   /**@const*/
   var PAGE_SIZE = 12;
@@ -30,17 +30,16 @@
 
   window.addEventListener('scroll', function() {
     clearTimeout(scrollTimeout);
-    /**@type {*|number}*/
+    /**@type {number}*/
     scrollTimeout = setTimeout(checkPagesNumber, timeoutSize);
   });
   /**
-   * @function
-   * @name checkPagesNumber
+   * @function checkPagesNumber
    */
   function checkPagesNumber() {
-    /**@type {ClientRect}*/
+    /**@type {Object}*/
     var footerCoordinates = footer.getBoundingClientRect();
-    /**@type {Number}*/
+    /**@type {number}*/
     var viewportSize = window.innerHeight;
     if (footerCoordinates.bottom - viewportSize <= footerCoordinates.height) {
       if (currentPage < Math.ceil(filteredPictures.length / PAGE_SIZE)) {
@@ -50,7 +49,6 @@
   }
   var filters = document.querySelector('.filters');
   filters.addEventListener('click', function(evt) {
-    /**@type {*|EventTarget|string|Node}*/
     var clickedElement = evt.target;
     if (clickedElement.classList.contains('filters-radio')) {
       setActiveFilter(clickedElement.id);
@@ -67,7 +65,7 @@
       /**@type {NodeList}*/
       var picturesAll = document.querySelectorAll('.picture');
       [].forEach.call(picturesAll, function(el) {
-        // el.removeEventListener('click', _onPhotoClick);
+       // el.removeEventListener('click', _onPhotoClick);
         container.removeChild(el);
       });
     }
@@ -141,7 +139,6 @@
 
   /**
    * @function getPictures
-   * @type {Array}
    */
   function getPictures() {
     var xhr = new XMLHttpRequest();
@@ -178,6 +175,7 @@
    * @param {Array.<Object>}loadedPictures
    */
   function updateLoadedPictures(loadedPictures) {
+    /**@type {Array}*/
     pictures = loadedPictures;
     setActiveFilter(activeFilter, true);
   }

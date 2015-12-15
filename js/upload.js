@@ -263,7 +263,7 @@
       // Ленивая инициализация. Объект не создается до тех пор, пока
       // не понадобится прочитать его в первый раз, а после этого запоминается
       // навсегда.
-      /**@type {{none: string, chrome: string, sepia: string}}*/
+      /**enum {string}*/
       filterMap = {
         'none': 'filter-none',
         'chrome': 'filter-chrome',
@@ -292,7 +292,6 @@
 
   /**
    * @function getInitialConstraints
-   * @enum {number}
    */
   function getInitialConstraints() {
     var resizerConstraints = currentResizer.getConstraint();
