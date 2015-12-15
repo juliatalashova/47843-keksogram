@@ -244,7 +244,7 @@
 
     filterForm.classList.add('invisible');
     uploadForm.classList.remove('invisible');
-
+    /**@type {Date}*/
     var myBirthDay = new Date(2015, 6, 10);
     var today = new Date();
 
@@ -263,13 +263,13 @@
       // Ленивая инициализация. Объект не создается до тех пор, пока
       // не понадобится прочитать его в первый раз, а после этого запоминается
       // навсегда.
+      /**enum {string}*/
       filterMap = {
         'none': 'filter-none',
         'chrome': 'filter-chrome',
         'sepia': 'filter-sepia'
       };
     }
-
     var selectedFilter = [].filter.call(filterForm['upload-filter'], function(item) {
       return item.checked;
     })[0].value;
@@ -290,6 +290,9 @@
   }
   window.addEventListener('resizerchange', getInitialConstraints);
 
+  /**
+   * @function getInitialConstraints
+   */
   function getInitialConstraints() {
     var resizerConstraints = currentResizer.getConstraint();
     resizeForm['x'].value = resizerConstraints.x;
