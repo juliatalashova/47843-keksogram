@@ -15,6 +15,7 @@
   var activeFilter = 'filter-all';
   /**@type {Array}*/
   var pictures = [];
+  var photoPictures = [];
   var filteredPictures = [];
   /**@type {number}*/
   var currentPage = 0;
@@ -62,12 +63,10 @@
    */
   function renderPictures(picturesToRender, pageNumber, replace) {
     if (replace) {
-      /**@type {NodeList}*/
-      var picturesAll = document.querySelectorAll('.picture');
-      [].forEach.call(picturesAll, function(el) {
-       // el.removeEventListener('click', _onPhotoClick);
-        container.removeChild(el);
+      photoPictures.forEach(function(picture) {
+        picture.destroy();
       });
+      photoPictures = [];
     }
     /**@type {DocumentFragment}*/
     var fragmentNew = document.createDocumentFragment();
@@ -77,14 +76,15 @@
     var numberFrom = pageNumber * PAGE_SIZE;
     var numberTo = numberFrom + PAGE_SIZE;
     var pagePictures = picturesToRender.slice(numberFrom, numberTo);
-    pagePictures.forEach(function(picture, index) {
+    pagePictures.forEach(function(picture) {
       /**@type {Photo}*/
       var photo = new Photo(picture);
+      var photoIndex = photoPictures.length;
+      photoPictures[photoIndex] = photo;
       var element = photo.render();
       fragmentNew.appendChild(element);
-
       photo.onClick = function() {
-        gallery.setCurrentPicture(index);
+        gallery.setCurrentPicture(photoIndex);
         gallery.show();
       };
       document.addEventListener('keydown', _onDocumentKeyDown);

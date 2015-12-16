@@ -18,19 +18,6 @@
     this.element.classList.remove('invisible');
     this._closeButton.addEventListener('click', this._onCloseClick);
   };
-  /**@param {Array} pictures*/
-  Gallery.prototype.setPictures = function(pictures) {
-    this.pictures = pictures;
-  };
-  Gallery.prototype.setCurrentPicture = function(key) {
-    var gallery = document.querySelector('.gallery-overlay');
-    var galleryImage = gallery.querySelector('.gallery-overlay-image');
-    galleryImage.src = this.pictures[key].url;
-    var galleryLikes = gallery.querySelector('.gallery-overlay-controls-like');
-    galleryLikes.querySelector('.likes-count').textContent = this.pictures[key].likes;
-    var galleryComments = gallery.querySelector('.gallery-overlay-controls-comments');
-    galleryComments.querySelector('.comments-count').textContent = this.pictures[key].comments;
-  };
   /**
    * @method
    * @param {Array.<Object>} pictures

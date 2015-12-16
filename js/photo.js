@@ -8,6 +8,7 @@
    * @type {Element}
    */
   var template = document.querySelector('#picture-template');
+  var picturesContainer = document.querySelector('.pictures');
   /**
    * @param {Object} data
    * @constructor
@@ -51,7 +52,7 @@
         this.element.classList.add('picture-load-failure');
       }.bind(this));
 
-      this.element.addEventListener('click', this._onPhotoClick);
+      this.element.addEventListener('click', this._onPhotoClick.bind(this));
 
       return this.element;
     }
@@ -60,12 +61,18 @@
    * @param {Event} evt
    * @private
    */
-  Photo.prototype._onPhotoClick = function() {
+  Photo.prototype._onPhotoClick = function(event) {
+    event.preventDefault();
     if (!this.element.classList.contains('picture-load-failure')) {
       if (typeof this.onClick === 'function') {
         this.onClick();
       }
     }
+  };
+
+  Photo.prototype.destroy = function() {
+    picturesContainer.removeChild(this.element);
+    this.element.removeEventListener('click', this._onPhotoClick);
   };
 
   /** @type {?Function} */
