@@ -12,7 +12,7 @@
   filtersContainer.classList.add('hidden');
   var container = document.querySelector('.pictures');
   var footer = document.querySelector('footer');
-  var activeFilter = 'filter-all';
+  var activeFilter = localStorage.getItem('activeFilter') || 'filter-all';
   /**@type {Array}*/
   var pictures = [];
   var photoPictures = [];
@@ -135,6 +135,8 @@
     renderPictures(filteredPictures, 0, true);
     checkPagesNumber();
     activeFilter = id;
+    localStorage.setItem('activeFilter', id);
+    filters.querySelector('#' + id).checked = true;
   }
 
   /**
