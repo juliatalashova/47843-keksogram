@@ -2,7 +2,7 @@
  * Created by Julia on 06.12.2015.
  */
 'use strict';
-(function() {
+define(function() {
   /**
    * @global
    * @type {Element}
@@ -78,6 +78,6 @@
   /** @type {?Function} */
   Photo.prototype.onClick = null;
 
-  window.Photo = Photo;
-})();
+  return Photo;
+});
 

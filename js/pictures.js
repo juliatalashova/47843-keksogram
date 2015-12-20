@@ -1,10 +1,15 @@
 /**
  * Created by Julia on 22.11.2015.
  */
-/* global Photo: true, Gallery: true */
 
 'use strict';
-(function() {
+requirejs.config({
+  baseUrl: 'js'
+});
+define([
+  'photo',
+  'gallery'
+], function(Photo, Gallery) {
   /**
    * @global
    */
@@ -195,5 +200,5 @@
     pictures = loadedPictures;
     setActiveFilter(activeFilter, true);
   }
-})();
+});
 

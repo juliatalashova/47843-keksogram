@@ -2,7 +2,7 @@
  * Created by Julia on 06.12.2015.
  */
 'use strict';
-(function() {
+define(function() {
   /**
    * @constructor
    */
@@ -54,6 +54,6 @@
   Gallery.prototype._onCloseClick = function() {
     location.hash = '';
   };
-  window.Gallery = Gallery;
-})();
+  return Gallery;
+});
 
