@@ -27,7 +27,17 @@
   };
   /**@method*/
   Gallery.prototype.setCurrentPicture = function(key) {
-    var picture = this.pictures[key];
+    var picture;
+    if (typeof key === 'number') {
+      picture = this.pictures[key];
+    } else {
+      for (var i = 0; i < this.pictures.length; i++) {
+        if (this.pictures[i].url === key) {
+          picture = this.pictures[i];
+          break;
+        }
+      }
+    }
     this.element.querySelector('.gallery-overlay-image').src = picture.url;
     var galleryControls = document.querySelector('.gallery-overlay-controls');
     galleryControls.querySelector('.likes-count').textContent = picture.likes;
@@ -42,7 +52,7 @@
   };
   /**@private*/
   Gallery.prototype._onCloseClick = function() {
-    this.hide();
+    location.hash = '';
   };
   window.Gallery = Gallery;
 })();
