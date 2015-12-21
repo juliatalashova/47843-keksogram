@@ -3,7 +3,7 @@
  */
 
 'use strict';
-requirejs.config({
+require.config({
   baseUrl: 'js'
 });
 define([
