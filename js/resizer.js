@@ -39,7 +39,6 @@
           this._container.width / 2 - side / 2,
           this._container.height / 2 - side / 2,
           side);
-
       // Отрисовка изначального состояния канваса.
       this.redraw();
     }.bind(this);
@@ -87,7 +86,8 @@
       // canvas'a поэтому важно вовремя поменять их, если нужно начать отрисовку
       // чего-либо с другой обводкой.
 
-      // Толщина линии.
+
+     /// Толщина линии.
       this._ctx.lineWidth = 6;
       // Цвет обводки.
       this._ctx.strokeStyle = '#ffe753';
@@ -119,6 +119,12 @@
           this._resizeConstraint.side - this._ctx.lineWidth / 2,
           this._resizeConstraint.side - this._ctx.lineWidth / 2);
 
+      // Display text above the border
+      var imageSize = this._image.naturalWidth + ' x ' + this._image.naturalHeight;
+      this._ctx.fillStyle = '#fff';
+      this._ctx.font = '16px Arial';
+      this._ctx.fillText(imageSize, -50, (-this._resizeConstraint.side / 2) - 10);
+
       // Восстановление состояния канваса, которое было до вызова ctx.save
       // и последующего изменения системы координат. Нужно для того, чтобы
       // следующий кадр рисовался с привычной системой координат, где точка
@@ -126,6 +132,50 @@
       // некорректно сработает даже очистка холста или нужно будет использовать
       // сложные рассчеты для координат прямоугольника, который нужно очистить.
       this._ctx.restore();
+
+      //горизонтальные линии
+      this._ctx.setLineDash([]);
+      this._ctx.lineDashOffset = 0;
+      this._ctx.beginPath();
+      var xLine1 = (this._container.width - this._resizeConstraint.side) / 2;
+      this._ctx.moveTo(xLine1 - 6, 0);
+      this._ctx.lineTo(this._resizeConstraint.side + xLine1, 0);
+      this._ctx.lineWidth = (this._container.height - this._resizeConstraint.side) - 12;
+      this._ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+      this._ctx.closePath();
+      this._ctx.stroke();
+
+      this._ctx.setLineDash([]);
+      this._ctx.lineDashOffset = 0;
+      this._ctx.beginPath();
+      this._ctx.moveTo(xLine1 - 6, this._image.naturalHeight);
+      this._ctx.lineTo(this._resizeConstraint.side + xLine1, this._image.naturalHeight);
+      this._ctx.lineWidth = (this._container.height - this._resizeConstraint.side);
+      this._ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+      this._ctx.closePath();
+      this._ctx.stroke();
+
+      //вертикальные линии
+      this._ctx.setLineDash([]);
+      this._ctx.lineDashOffset = 0;
+      this._ctx.beginPath();
+      this._ctx.moveTo(0, 0);
+      this._ctx.lineTo(0, this._image.naturalHeight);
+      this._ctx.lineWidth = (this._container.width - this._resizeConstraint.side) - 12;
+      this._ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+      this._ctx.closePath();
+      this._ctx.stroke();
+
+      this._ctx.setLineDash([]);
+      this._ctx.lineDashOffset = 0;
+      this._ctx.beginPath();
+      this._ctx.moveTo(this._image.naturalWidth, 0);
+      this._ctx.lineTo(this._image.naturalWidth, this._image.naturalHeight);
+      this._ctx.lineWidth = (this._container.width - this._resizeConstraint.side);
+      this._ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+      this._ctx.closePath();
+      this._ctx.stroke();
+
     },
 
     /**
@@ -221,9 +271,9 @@
      */
     moveConstraint: function(deltaX, deltaY, deltaSide) {
       this.setConstraint(
-          this._resizeConstraint.x + (deltaX || 0),
-          this._resizeConstraint.y + (deltaY || 0),
-          this._resizeConstraint.side + (deltaSide || 0));
+        this._resizeConstraint.x + (deltaX || 0),
+        this._resizeConstraint.y + (deltaY || 0),
+        this._resizeConstraint.side + (deltaSide || 0));
     },
 
     /**
